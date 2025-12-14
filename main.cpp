@@ -37,7 +37,7 @@ int main()
     {
         processInput(window);
 
-        glClearColor(0.2f, 0.5f, 0.4f, 0.2f);
+        glClearColor(0.820f, 0.787f, 0.164f, 2.5f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glfwSwapBuffers(window);

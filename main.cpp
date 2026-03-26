@@ -31,7 +31,7 @@ int main()
     }
 
     //include shader files
-    Shader ourShader ("shader.vs", "shader.fs");
+    Shader ourShader ("/Users/plee/Waves/shader.vs", "/Users/plee/Waves/shader.fs");
 
     float vertices[] = {
     1.0f, 0.6f, 0.0f,
@@ -71,8 +71,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         ourShader.use();
+        glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -26,3 +26,10 @@ run: app
 
 clean:
 	rm -f *.o app
+
+all:
+	rm -f *.o app
+	$(MAKE)
+	./app
+
+.PHONY: clean run all

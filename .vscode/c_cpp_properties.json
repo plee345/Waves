@@ -4,7 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/Waves/dependencies/include"
+                "${workspaceFolder}/dependencies/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

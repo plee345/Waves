@@ -90,6 +90,8 @@ int main()
     {
         processInput(window);
 
+        debugPrint(&xPositionRight, &yPositionRight, &xPositionLeft, &yPositionLeft, &xPositionBall, &yPositionBall);
+
         glClearColor(0.00f, 0.00f, 0.00f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -120,6 +122,53 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0,0,width,height);
 }
 
+void checkBallCollision(float* xPositionPaddle, float* yPositionPaddle, float* xPositionBall, float*yPositionBall)
+{
+    float result;
+    //distance formula
+    result = sqrt(pow((*xPositionPaddle - *xPositionBall), 2) - 
+             pow((*yPositionPaddle - *yPositionBall), 2));
+    if (result <= 0.00f)
+    {
+        *xPositionBall *= -1;
+        *yPositionBall *= -1;
+    }
+}
+
+void checkBoundsCollision(float* xPositionRight, float* yPositionRight, float* xPositionLeft, float* yPositionLeft, float* xPositionBall, float* yPositionBall)
+{
+    if (*yPositionRight >= 0.75f)
+    {
+        std::cout << "yPositionRight at upper bounds." << std::endl;
+        *yPositionRight = 0.75f;
+    }
+    if (*yPositionRight <= -0.75f)
+    {
+        std::cout << "yPositionRight at lower bounds." << std::endl;
+        *yPositionRight = -0.75f;
+    }
+    if (*yPositionLeft >= 0.75f)
+    {
+        std::cout << "yPositionLeft at upper bounds." << std::endl;
+        *yPositionLeft = 0.75f;
+    }
+    if (*yPositionLeft <= -0.75f)
+    {
+        std::cout << "yPositionLeft at lower bounds." << std::endl;
+        *yPositionLeft = -0.75f;
+    }
+    if (*xPositionBall >= 0.75f)
+    {
+        std::cout << "xPositionBall at upper bounds." << std::endl;
+        *xPositionBall = 0.75f;
+    }
+    if (*xPositionBall <= -0.75f)
+    {
+        std::cout << "xPositionBall at lower bounds." << std::endl;
+        *xPositionBall = 0.75f;
+    }
+}
+
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -127,55 +176,11 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
         std::cout << "\nClosing Window...\n";
     }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-    {
-        if (yPositionRight >= 0.75f)
-        {
-            std::cout << "yPosition at upper bounds." << "\n";
-            yPositionRight = 0.75f;
-        }
-        else
-        {
-            yPositionRight += 0.01f;
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-    {
-        if (yPositionRight <= -0.75f)
-        {
-            std::cout << "yPosition at lower bounds." << "\n";
-            yPositionRight = -0.75f;
-        }
-        else
-        {
-            yPositionRight -= 0.01f;
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    {
-        if (yPositionLeft <= -0.75f)
-        {
-            std::cout << "yPosition at lower bounds." << "\n";
-            yPositionLeft = -0.75f;
-        }
-        else
-        {
-            yPositionLeft -= 0.01f;
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    {
-        if (yPositionLeft >= 0.75f)
-        {
-            std::cout << "yPosition at upper bounds." << "\n";
-            yPositionLeft = 0.75f;
-        }
-        else
-        {
-            yPositionLeft += 0.01f;
-        }
-    }
-    debugPrint(&xPositionRight, &yPositionRight, &xPositionLeft, &yPositionLeft, &xPositionBall, &yPositionBall);
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {yPositionRight += 0.01f;}
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {yPositionRight -= 0.01f;}
+
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {yPositionLeft -= 0.01f;}
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {yPositionLeft += 0.01f;}
 }
 
 void debugPrint(float* xPositionRight, float* yPositionRight, float* xPositionLeft, float* yPositionLeft, float* xPositionBall, float* yPositionBall)

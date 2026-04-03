@@ -157,15 +157,25 @@ void checkBoundsCollision(float* xPositionRight, float* yPositionRight, float* x
         std::cout << "yPositionLeft at lower bounds." << std::endl;
         *yPositionLeft = -0.75f;
     }
-    if (*xPositionBall >= 0.75f)
+    if (*yPositionBall >= 0.75f)
     {
-        std::cout << "xPositionBall at upper bounds." << std::endl;
-        *xPositionBall = 0.75f;
+        std::cout << "yPositionBall at upper bounds." << std::endl;
+        *yPositionBall = 0.75f;
     }
-    if (*xPositionBall <= -0.75f)
+    if (*yPositionBall <= -0.75f)
     {
-        std::cout << "xPositionBall at lower bounds." << std::endl;
-        *xPositionBall = 0.75f;
+        std::cout << "yPositionBall at lower bounds." << std::endl;
+        *yPositionBall = 0.75f;
+    }
+    if (*xPositionBall >= 0.95f)
+    {
+        //std::cout << "xPositionBall at right bounds." << std::endl;
+        *xPositionBall = 0.95f;
+    }
+    if (*xPositionBall <= -0.95f)
+    {
+        std::cout << "xPositionBall at left bounds." << std::endl;
+        *xPositionBall = 0.95f;
     }
 }
 

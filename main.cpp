@@ -67,11 +67,12 @@ int main()
 
     float vertices[] = 
     {
+        //Paddles
         0.10f,  0.25f, 0.0f,  // top right
         0.10f, -0.25f, 0.0f,  // bottom right
         -0.10f, -0.25f, 0.0f,  // bottom left
         -0.10f,  0.25f, 0.0f,   // top left 
-    
+        //Ball
         0.10f, 0.10f, 0.0f,
         0.10f, -0.10f, 0.0f,
         -0.10f, -0.10f, 0.0f,
@@ -91,13 +92,13 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     //initialize vertex array object and bind it for later use in render loop
-    unsigned int VAO1;
-    glGenVertexArrays(1, &VAO1);
-    glBindVertexArray(VAO1);
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
 
-    unsigned int VBO1;
-    glGenBuffers(1, &VBO1);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+    unsigned int VBO;
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -142,7 +143,7 @@ int main()
         glUniform1f(shapeWho, shapeState);
         glUniform2f(position, xPositionLeft, yPositionLeft);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        
+        //Ball
         shapeState = 0;
         glUniform1f(shapeWho, shapeState);
         glUniform2f(position, xPositionBall, yPositionBall);
@@ -151,9 +152,9 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteVertexArrays(1, &VAO1);
+    glDeleteVertexArrays(1, &VAO);
     //glDeleteVertexArrays(1, &VAO2);
-    glDeleteBuffers(1, &VBO1);
+    glDeleteBuffers(1, &VBO);
     //glDeleteBuffers(1, &VBO2);
 
     glfwTerminate();
@@ -255,11 +256,11 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
         std::cout << "\nClosing Window...\n";
     }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {yPositionRight += 0.01f;}
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {yPositionRight -= 0.01f;}
-
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {yPositionLeft -= 0.01f;}
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {yPositionLeft += 0.01f;}
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) yPositionRight += 0.01f;
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) yPositionRight -= 0.01f;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) yPositionLeft -= 0.01f;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) yPositionLeft += 0.01f;
+    debugPrint(&xPositionRight, &yPositionRight, &xPositionLeft, &yPositionLeft, &xPositionBall, &yPositionBall);
 }
 
 void debugPrint(float* xPositionRight, float* yPositionRight, float* xPositionLeft, float* yPositionLeft, float* xPositionBall, float* yPositionBall)

@@ -6,7 +6,7 @@
 
 enum state
 {
-    leftPaddleCollision, rightPaddleCollision, noCollision, leftGoal, rightGoal
+    leftPaddleCollision, rightPaddleCollision, topWallCollision, bottomWallCollision, noCollision, leftGoal, rightGoal
 };
 typedef enum state State;
 
@@ -234,16 +234,18 @@ State checkBallCollision(float* xPositionPaddle, float* yPositionPaddle, float* 
 
 void ballMovement(float* xPositionBall, float* yPositionBall)
 {
-    float velocity = 0.0f;
-    State ballState;
+    float xVelocity = 0.01f;
+    float yVelocity = 0.01f;
+    State ballState = checkBallCollision(&xPositionRight, &yPositionRight, xPositionBall , yPositionBall);
 
-    ballState = checkBallCollision(&xPositionRight, &yPositionRight, xPositionBall , yPositionBall);
     if (ballState == rightPaddleCollision || ballState == leftPaddleCollision)
     {
-        velocity *= -1.00f;
+        xVelocity *= -1.00f;
+        yVelocity *= -1.00f;
+        ballState = noCollision;
     }
     //*xPositionBall += -0.01f;
-    //*xPositionBall += velocity;
+    //*xPositionBall += xVelocity;
     //Figure out y-axis collision later
     // if (*yPositionBall > 0.00f) {*yPositionBall += -0.00f;}
     // else {*yPositionBall += 0.01f;}

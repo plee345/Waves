@@ -16,17 +16,21 @@ void debugPrint(float* xPositionRight, float* yPositionRight, float* xPositionLe
 
 State checkBallCollision(float* xPositionPaddle, float* yPositionPaddle, float* xPositionBall, float*yPositionBall);
 void checkBoundsCollision(float* xPositionRight, float* yPositionRight, float* xPositionLeft, float* yPositionLeft, float* xPositionBall, float* yPositionBall);
+void makeHitBox(float* xPosition, float* yPosition, float vertices[]);
 
 void ballMovement(float* xPositionBall, float* yPositionBall);
 
 float xPositionRight = 0.95f;
 float yPositionRight = 0.0f;
+float rightHitBox[];   
 
 float xPositionLeft = -0.95f;
 float yPositionLeft = 0.0f;
+float leftHitBox[];
 
 float xPositionBall = 0.0f;
 float yPositionBall = 0.0f;
+float ballHitBox[];
 
 int shapeState;
 int width = 800;
@@ -250,6 +254,15 @@ void ballMovement(float* xPositionBall, float* yPositionBall)
     //Figure out y-axis collision later
     // if (*yPositionBall > 0.00f) {*yPositionBall += -0.00f;}
     // else {*yPositionBall += 0.01f;}
+}
+
+void makeHitBox(float* xPosition, float* yPosition, float vertices[])
+{
+    int i;
+    for (i = 0; i < 4; i++)
+    {
+        vertices[i] += (*xPosition + *yPosition);        
+    }
 }
 
 void processInput(GLFWwindow *window)

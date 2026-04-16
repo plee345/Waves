@@ -72,15 +72,15 @@ int main()
     float vertices[] = 
     {
         //Paddles
-        0.10f,  0.25f, 0.0f,  // top right
-        0.10f, -0.25f, 0.0f,  // bottom right
-        -0.10f, -0.25f, 0.0f,  // bottom left
-        -0.10f,  0.25f, 0.0f,   // top left 
+        0.05f,  0.25f, 0.0f,  // top right
+        0.05f, -0.25f, 0.0f,  // bottom right
+        -0.05f, -0.25f, 0.0f,  // bottom left
+        -0.05f,  0.25f, 0.0f,   // top left 
         //Ball
-        0.10f, 0.10f, 0.0f,
-        0.10f, -0.10f, 0.0f,
-        -0.10f, -0.10f, 0.0f,
-        -0.10f, 0.10f, 0.0f
+        0.05f, 0.05f, 0.0f,
+        0.05f, -0.05f, 0.0f,
+        -0.05f, -0.05f, 0.0f,
+        -0.05f, 0.05f, 0.0f
     };
 
     
@@ -173,26 +173,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void checkBoundsCollision(float* xPositionRight, float* yPositionRight, float* xPositionLeft, float* yPositionLeft, float* xPositionBall, float* yPositionBall)
 {
-    if (*yPositionRight >= 0.76f)
-    {
-        std::cout << "\nyPositionRight at upper bounds." << std::endl;
-        *yPositionRight = 0.75f;
-    }
-    if (*yPositionRight <= -0.76f)
-    {
-        std::cout << "\nyPositionRight at lower bounds." << std::endl;
-        *yPositionRight = -0.75f;
-    }
-    if (*yPositionLeft >= 0.76f)
-    {
-        std::cout << "\nyPositionLeft at upper bounds." << std::endl;
-        *yPositionLeft = 0.75f;
-    }
-    if (*yPositionLeft <= -0.76f)
-    {
-        std::cout << "\nyPositionLeft at lower bounds." << std::endl;
-        *yPositionLeft = -0.75f;
-    }
     if (*yPositionBall >= 0.76f)
     {
         std::cout << "\nyPositionBall at upper bounds." << std::endl;
@@ -272,10 +252,10 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
         std::cout << "\nClosing Window...\n";
     }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) yPositionRight += 0.01f;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) yPositionRight -= 0.01f;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) yPositionLeft -= 0.01f;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) yPositionLeft += 0.01f;
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && yPositionRight < 0.75f) yPositionRight += 0.015f;
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && yPositionRight > -0.75f) yPositionRight -= 0.015f;
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && yPositionLeft < 0.75f) yPositionLeft += 0.015f;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && yPositionLeft > -0.75f) yPositionLeft -= 0.015f;
     debugPrint(&xPositionRight, &yPositionRight, &xPositionLeft, &yPositionLeft, &xPositionBall, &yPositionBall);
 }
 

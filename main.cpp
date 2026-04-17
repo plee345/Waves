@@ -20,6 +20,8 @@ void makeHitBox(float* xPosition, float* yPosition, float vertices[]);
 
 void ballMovement(float* xPositionBall, float* yPositionBall);
 
+State ballState = checkBallCollision(&xPositionRight, &yPositionRight, &xPositionBall, &yPositionBall);
+
 float xPositionRight = 0.95f;
 float yPositionRight = 0.0f;
 float rightHitBox[];   
@@ -35,6 +37,24 @@ float ballHitBox[];
 int shapeState;
 int width = 800;
 int height = 600;
+
+float paddles[]
+{
+    //Paddles
+    0.05f,  0.25f, 0.0f,  // top right
+    0.05f, -0.25f, 0.0f,  // bottom right
+    -0.05f, -0.25f, 0.0f,  // bottom left
+    -0.05f,  0.25f, 0.0f,   // top left 
+};
+
+float ball[]
+{
+    //Ball
+    0.05f, 0.05f, 0.0f,
+    0.05f, -0.05f, 0.0f,
+    -0.05f, -0.05f, 0.0f,
+    -0.05f, 0.05f, 0.0f
+};
 
 float screenRatio = (float)width / (float)height;
 
@@ -83,7 +103,10 @@ int main()
         -0.05f, 0.05f, 0.0f
     };
 
-    
+    std::memcpy(rightHitBox, paddles, sizeof(paddles));
+    std::memcpy(leftHitBox, paddles, sizeof(paddles));
+    std::memcpy(ballHitBox, ball, sizeof(ball));
+
     unsigned int indices[]
     {
         0, 1, 3, 1, 2, 3, //paddle
@@ -217,18 +240,18 @@ State checkBallCollision(float* xPositionPaddle, float* yPositionPaddle, float* 
     return noCollision;
 }
 
-void ballMovement(float* xPositionBall, float* yPositionBall)
+void ballMovement(float* xPositionBall, float* yPositionBall, State state)
 {
     float xVelocity = 0.01f;
     float yVelocity = 0.01f;
-    State ballState = checkBallCollision(&xPositionRight, &yPositionRight, xPositionBall , yPositionBall);
 
-    if (ballState == rightPaddleCollision || ballState == leftPaddleCollision)
+    if (state == rightPaddleCollision || state == leftPaddleCollision)
     {
         xVelocity *= -1.00f;
         yVelocity *= -1.00f;
-        ballState = noCollision;
+        state = noCollision;
     }
+    //*yPositionBall += 0.01f;
     //*xPositionBall += -0.01f;
     //*xPositionBall += xVelocity;
     //Figure out y-axis collision later
